@@ -1,0 +1,9 @@
+Run VSCode as an administrator
+
+Terminal 1:
+taskkill /f /im mysqld.exe
+cd "C:\Program Files\MySQL\MySQL Server 8.0\bin"
+.\mysqld --console
+
+Terminal 2:
+npm run dev

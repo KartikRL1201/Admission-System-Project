@@ -1,0 +1,34 @@
+CREATE DATABASE IF NOT EXISTS AdmissionSystem;
+USE AdmissionSystem;
+
+CREATE TABLE IF NOT EXISTS Admins (
+    Admin_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Username VARCHAR(50) UNIQUE NOT NULL,
+    Password_Hash VARCHAR(255) NOT NULL,
+    Created_At TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS Departments (
+    Dept_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Dept_Name VARCHAR(100) NOT NULL UNIQUE,
+    Total_Seats INT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Students (
+    Student_ID INT AUTO_INCREMENT PRIMARY KEY,
+    First_Name VARCHAR(50) NOT NULL,
+    Last_Name VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) UNIQUE NOT NULL,
+    Phone VARCHAR(15),
+    Merit_Score DECIMAL(5,2)
+);
+
+CREATE TABLE IF NOT EXISTS Applications (
+    Application_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Student_ID INT,
+    Dept_ID INT,
+    Application_Date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    Status ENUM('Pending', 'Approved', 'Rejected') DEFAULT 'Pending',
+    FOREIGN KEY (Student_ID) REFERENCES Students(Student_ID) ON DELETE CASCADE,
+    FOREIGN KEY (Dept_ID) REFERENCES Departments(Dept_ID) ON DELETE CASCADE
+);
