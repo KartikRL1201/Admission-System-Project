@@ -84,18 +84,10 @@ router.get("/analytics", verifyAdmin, async (req, res) => {
             GROUP BY Status
         `);
 
-        const [deptStats] = await db.query(`
-            SELECT
-                d.Dept_Name,
-                d.Total_Seats,
-                COUNT(a.Application_ID) as Total_Applicants,
-                IFNULL(AVG(s.Merit_Score), 0) as Avg_Merit
-            FROM Departments d
-            LEFT JOIN Applications a ON d.Dept_ID = a.Dept_ID
-            LEFT JOIN Students s ON a.Student_ID = s.Student_ID
-            GROUP BY d.Dept_ID
-            ORDER BY Total_Applicants DESC
-        `);
+        const [procedureResult] = await db.query(
+            "CALL Generate_Admission_Report()",
+        );
+        const deptStats = procedureResult[0];
 
         const [topCandidates] = await db.query(`
             SELECT s.First_Name, s.Last_Name, s.Merit_Score, d.Dept_Name
