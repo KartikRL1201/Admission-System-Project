@@ -2,8 +2,11 @@ College Admission Management System
 A full-stack web application built with the MERN stack (MySQL, Express, React, Node.js) to automate and manage college admission procedures dynamically.
 
 Key Features
+
 ->Dynamic Analytics Dashboard: Visualizes application funnel statistics and real-time department enrollment distributions via responsive bar charts.
+
 ->Advanced DBMS Automations: Implements robust database performance optimizations and checks using custom Triggers, Stored Procedures, Cursors, and ACID-compliant Transactions.
+
 ->Role-Based Security: Protected administrative controls backed by JWT-based token authentication.
 
 Setup Instructions
