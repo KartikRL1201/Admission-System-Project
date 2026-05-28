@@ -58,3 +58,12 @@ BEGIN
 END //
 
 DELIMITER ;
+
+-- Manage Tickets
+UPDATE Tickets SET Status = 'Resolved' WHERE Ticket_ID = ?;
+DELETE FROM Tickets WHERE Ticket_ID = ?;
+TRUNCATE TABLE Ticket_Replies;
+TRUNCATE TABLE Tickets;
+
+-- Manage Activity / Audit Logs
+TRUNCATE TABLE Audit_Logs;

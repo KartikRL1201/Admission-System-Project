@@ -2,229 +2,222 @@ import { useState } from "react";
 import axios from "axios";
 
 function AdminLogin({ onLogin }) {
-    const [isLoginMode, setIsLoginMode] = useState(true);
-    const [authData, setAuthData] = useState({
-        username: "",
-        password: "",
-        confirmPassword: "",
-    });
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
-
-    const handleRegister = async (e) => {
-        e.preventDefault();
-        setError("");
-        setSuccess("");
-
-        if (authData.password !== authData.confirmPassword) {
-            setError("Passwords do not match!");
-            return;
-        }
-
-        try {
-            const res = await axios.post("/api/admin/register", {
-                username: authData.username,
-                password: authData.password,
-            });
-            if (res.data.success) {
-                setSuccess(res.data.message);
-                setAuthData({
-                    username: "",
-                    password: "",
-                    confirmPassword: "",
-                });
-                setIsLoginMode(true);
-            }
-        } catch (err) {
-            setError(
-                err.response?.data?.message || "Failed to create account.",
-            );
-        }
-    };
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleLogin = async (e) => {
         e.preventDefault();
         setError("");
-        setSuccess("");
+        setIsLoading(true);
+
         try {
-            const res = await axios.post("/api/admin/login", {
-                username: authData.username,
-                password: authData.password,
+            const response = await axios.post("/api/admin/login", {
+                username,
+                password,
             });
-            if (res.data.success) {
-                onLogin(res.data.token);
+
+            if (response.data.success && typeof onLogin === "function") {
+                onLogin(response.data.token);
             }
         } catch (err) {
-            setError(
-                err.response?.data?.message || "Invalid username or password.",
-            );
+            setError(err.response?.data?.message || "Authentication failed.");
+        } finally {
+            setIsLoading(false);
         }
     };
 
     return (
         <div
-            className="animate-fade-in hover-lift"
             style={{
-                maxWidth: "400px",
-                margin: "60px auto",
-                backgroundColor: "var(--card-bg)",
-                padding: "30px",
-                borderRadius: "8px",
-                border: "1px solid var(--border-color)",
-                boxShadow: "0 4px 15px var(--modal-shadow)",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                minHeight: "100vh",
+                padding: "20px",
             }}
         >
-            {error && (
-                <div
-                    style={{
-                        padding: "12px",
-                        backgroundColor: "#f8d7da",
-                        color: "#721c24",
-                        borderRadius: "4px",
-                        marginBottom: "15px",
-                        fontWeight: "500",
-                        textAlign: "center",
-                    }}
-                >
-                    {error}
-                </div>
-            )}
-            {success && (
-                <div
-                    style={{
-                        padding: "12px",
-                        backgroundColor: "#d4edda",
-                        color: "#155724",
-                        borderRadius: "4px",
-                        marginBottom: "15px",
-                        fontWeight: "500",
-                        textAlign: "center",
-                    }}
-                >
-                    {success}
-                </div>
-            )}
-
-            <h2
+            <div
+                className="hover-lift animate-fade-in"
                 style={{
-                    color: "var(--text-main)",
-                    textAlign: "center",
-                    marginTop: 0,
-                    marginBottom: "20px",
+                    backgroundColor: "var(--card-bg)",
+                    padding: "50px 40px",
+                    borderRadius: "16px",
+                    border: "1px solid var(--border-color)",
+                    width: "100%",
+                    maxWidth: "420px",
+                    boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)",
                 }}
             >
-                {isLoginMode ? "Admin Authentication" : "Create Admin Account"}
-            </h2>
-
-            <form
-                onSubmit={isLoginMode ? handleLogin : handleRegister}
-                style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "15px",
-                }}
-            >
-                <input
-                    className="input-focus"
-                    type="text"
-                    placeholder="Username"
-                    value={authData.username}
-                    onChange={(e) =>
-                        setAuthData({ ...authData, username: e.target.value })
-                    }
-                    required
-                    style={{
-                        padding: "12px",
-                        backgroundColor: "var(--input-bg)",
-                        border: "1px solid var(--border-color)",
-                        color: "var(--text-main)",
-                        borderRadius: "4px",
-                    }}
-                />
-                <input
-                    className="input-focus"
-                    type="password"
-                    placeholder="Password"
-                    value={authData.password}
-                    onChange={(e) =>
-                        setAuthData({ ...authData, password: e.target.value })
-                    }
-                    required
-                    style={{
-                        padding: "12px",
-                        backgroundColor: "var(--input-bg)",
-                        border: "1px solid var(--border-color)",
-                        color: "var(--text-main)",
-                        borderRadius: "4px",
-                    }}
-                />
-
-                {!isLoginMode && (
-                    <input
-                        className="input-focus animate-fade-in"
-                        type="password"
-                        placeholder="Confirm Password"
-                        value={authData.confirmPassword}
-                        onChange={(e) =>
-                            setAuthData({
-                                ...authData,
-                                confirmPassword: e.target.value,
-                            })
-                        }
-                        required
+                <div style={{ textAlign: "center", marginBottom: "40px" }}>
+                    <div
                         style={{
-                            padding: "12px",
-                            backgroundColor: "var(--input-bg)",
-                            border: "1px solid var(--border-color)",
-                            color: "var(--text-main)",
-                            borderRadius: "4px",
+                            width: "60px",
+                            height: "60px",
+                            background:
+                                "linear-gradient(135deg, var(--accent-glow), var(--highlight))",
+                            borderRadius: "12px",
+                            margin: "0 auto 20px",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            boxShadow:
+                                "0 10px 25px -5px rgba(99, 102, 241, 0.5)",
                         }}
-                    />
+                    >
+                        <svg
+                            width="28"
+                            height="28"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="white"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        >
+                            <rect
+                                x="3"
+                                y="11"
+                                width="18"
+                                height="11"
+                                rx="2"
+                                ry="2"
+                            ></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                    </div>
+                    <h2
+                        style={{
+                            margin: 0,
+                            color: "var(--text-main)",
+                            fontSize: "24px",
+                            fontWeight: "700",
+                            letterSpacing: "-0.5px",
+                        }}
+                    >
+                        System Authentication
+                    </h2>
+                    <p
+                        style={{
+                            margin: "10px 0 0",
+                            color: "var(--text-muted)",
+                            fontSize: "14px",
+                        }}
+                    >
+                        Enter credentials to continue.
+                    </p>
+                </div>
+
+                {error && (
+                    <div
+                        className="animate-fade-in"
+                        style={{
+                            padding: "12px 16px",
+                            backgroundColor: "rgba(220, 53, 69, 0.1)",
+                            borderLeft: "4px solid #dc3545",
+                            color: "#ff8793",
+                            borderRadius: "4px",
+                            marginBottom: "25px",
+                            fontSize: "14px",
+                            fontWeight: "500",
+                        }}
+                    >
+                        {error}
+                    </div>
                 )}
 
-                <button
-                    className="btn-interactive"
-                    type="submit"
-                    style={{
-                        padding: "14px",
-                        backgroundColor: isLoginMode ? "#28a745" : "#007BFF",
-                        color: "white",
-                        border: "none",
-                        borderRadius: "4px",
-                        cursor: "pointer",
-                        fontWeight: "bold",
-                        marginTop: "10px",
-                    }}
-                >
-                    {isLoginMode ? "Secure Login" : "Register Account"}
-                </button>
-            </form>
-
-            <div style={{ textAlign: "center", marginTop: "20px" }}>
-                <button
-                    onClick={() => {
-                        setIsLoginMode(!isLoginMode);
-                        setError("");
-                        setSuccess("");
-                        setAuthData({
-                            username: "",
-                            password: "",
-                            confirmPassword: "",
-                        });
-                    }}
-                    style={{
-                        background: "none",
-                        border: "none",
-                        color: "var(--highlight)",
-                        cursor: "pointer",
-                        textDecoration: "underline",
-                        fontSize: "14px",
-                    }}
-                >
-                    {isLoginMode
-                        ? "Don't have an account? Sign Up"
-                        : "Already have an account? Log In"}
-                </button>
+                <form onSubmit={handleLogin}>
+                    <div style={{ marginBottom: "20px" }}>
+                        <label
+                            style={{
+                                display: "block",
+                                marginBottom: "8px",
+                                fontSize: "13px",
+                                fontWeight: "600",
+                                color: "var(--text-muted)",
+                                textTransform: "uppercase",
+                                letterSpacing: "0.5px",
+                            }}
+                        >
+                            Username
+                        </label>
+                        <input
+                            type="text"
+                            className="input-focus"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            required
+                            style={{
+                                width: "100%",
+                                padding: "14px 16px",
+                                backgroundColor: "var(--input-bg)",
+                                border: "1px solid var(--border-color)",
+                                borderRadius: "8px",
+                                color: "var(--text-main)",
+                                fontSize: "15px",
+                                boxSizing: "border-box",
+                            }}
+                            placeholder="admin@system.io"
+                        />
+                    </div>
+                    <div style={{ marginBottom: "35px" }}>
+                        <label
+                            style={{
+                                display: "block",
+                                marginBottom: "8px",
+                                fontSize: "13px",
+                                fontWeight: "600",
+                                color: "var(--text-muted)",
+                                textTransform: "uppercase",
+                                letterSpacing: "0.5px",
+                            }}
+                        >
+                            Password
+                        </label>
+                        <input
+                            type="password"
+                            className="input-focus"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                            style={{
+                                width: "100%",
+                                padding: "14px 16px",
+                                backgroundColor: "var(--input-bg)",
+                                border: "1px solid var(--border-color)",
+                                borderRadius: "8px",
+                                color: "var(--text-main)",
+                                fontSize: "15px",
+                                boxSizing: "border-box",
+                                fontFamily: "monospace",
+                            }}
+                            placeholder="••••••••••••"
+                        />
+                    </div>
+                    <button
+                        type="submit"
+                        className="btn-interactive"
+                        disabled={isLoading}
+                        style={{
+                            width: "100%",
+                            padding: "16px",
+                            backgroundColor: "var(--accent-glow)",
+                            color: "white",
+                            border: "none",
+                            borderRadius: "8px",
+                            cursor: isLoading ? "not-allowed" : "pointer",
+                            fontSize: "14px",
+                            fontWeight: "700",
+                            opacity: isLoading ? 0.7 : 1,
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                        }}
+                    >
+                        {isLoading ? "AUTHENTICATING..." : "AUTHORIZE ACCESS"}
+                    </button>
+                </form>
             </div>
         </div>
     );
