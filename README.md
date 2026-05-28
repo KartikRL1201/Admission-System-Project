@@ -36,3 +36,5 @@ From the root project directory, run the concurrent startup command. The backend
 ->npm run dev
 Frontend UI: Running locally on http://localhost:5173/
 Backend Server: Running locally on http://localhost:5000/
+
+5. SuperAdmin: Username: admin@system.io, password: admin123
