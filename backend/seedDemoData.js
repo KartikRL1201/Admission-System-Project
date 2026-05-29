@@ -115,49 +115,49 @@ async function seed() {
                 appIdx: 3, 
                 subject: "Requesting update on my Application status",
                 replies: [
-                    { sender: "Diya Patel", msg: "Hello, I submitted my application last week. When can I expect a decision?" },
-                    { sender: "admin", msg: "Hi Diya, your merit score (76.5) is currently being reviewed for Mechanical Engineering. We will update the status shortly." },
-                    { sender: "Diya Patel", msg: "Thank you for the update. Looking forward to it!" }
+                    { sender: "Student", msg: "Hello, I submitted my application last week. When can I expect a decision?" },
+                    { sender: "admin@system.io", msg: "Hi Diya, your merit score (76.5) is currently being reviewed for Mechanical Engineering. We will update the status shortly." },
+                    { sender: "Student", msg: "Thank you for the update. Looking forward to it!" }
                 ]
             },
             {
                 appIdx: 4, 
                 subject: "Typo in my Phone Number",
                 replies: [
-                    { sender: "Kabir Mehta", msg: "Hi, I wrote my phone number incorrectly. It should be 9876543299 instead of 9876543214." },
-                    { sender: "admin", msg: "Hello Kabir, we have noted your correction. The department reviewer has been informed." }
+                    { sender: "Student", msg: "Hi, I wrote my phone number incorrectly. It should be 9876543299 instead of 9876543214." },
+                    { sender: "admin@system.io", msg: "Hello Kabir, we have noted your correction. The department reviewer has been informed." }
                 ]
             },
             {
                 appIdx: 7, 
                 subject: "Query regarding application criteria",
                 replies: [
-                    { sender: "Pranav Rao", msg: "Hello, I wanted to know the cutoff score for Mechanical?" },
-                    { sender: "admin", msg: "Hi Pranav, cutoff details will be finalized shortly. Please wait for your application status update." }
+                    { sender: "Student", msg: "Hello, I wanted to know the cutoff score for Mechanical?" },
+                    { sender: "admin@system.io", msg: "Hi Pranav, cutoff details will be finalized shortly. Please wait for your application status update." }
                 ]
             },
             {
                 appIdx: 9, 
                 subject: "Can I transfer to Computer Science?",
                 replies: [
-                    { sender: "Rohan Gupta", msg: "Hi, I applied for IS but want to change my preference to CS if seats are available." },
-                    { sender: "admin", msg: "Hello Rohan, CS seats are highly competitive. You can request a transfer only after the initial round is processed." }
+                    { sender: "Student", msg: "Hi, I applied for IS but want to change my preference to CS if seats are available." },
+                    { sender: "admin@system.io", msg: "Hello Rohan, CS seats are highly competitive. You can request a transfer only after the initial round is processed." }
                 ]
             },
             {
                 appIdx: 11, 
                 subject: "Hostel accommodation details needed",
                 replies: [
-                    { sender: "Tanya Choudhury", msg: "Hello, does the mechanical engineering campus have girls hostel facilities?" },
-                    { sender: "admin", msg: "Yes Tanya, we have fully equipped girls hostels on campus. Once approved, you will receive a hostel registration link." }
+                    { sender: "Student", msg: "Hello, does the mechanical engineering campus have girls hostel facilities?" },
+                    { sender: "admin@system.io", msg: "Yes Tanya, we have fully equipped girls hostels on campus. Once approved, you will receive a hostel registration link." }
                 ]
             },
             {
                 appIdx: 12, 
                 subject: "Is there a waitlist option?",
                 replies: [
-                    { sender: "Vivaan Kapoor", msg: "Hello, can I be put on a waitlist if seats fill up?" },
-                    { sender: "admin", msg: "Hi Vivaan, waitlisting is only offered once all standard acceptances are processed." }
+                    { sender: "Student", msg: "Hello, can I be put on a waitlist if seats fill up?" },
+                    { sender: "admin@system.io", msg: "Hi Vivaan, waitlisting is only offered once all standard acceptances are processed." }
                 ]
             }
         ];

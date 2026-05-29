@@ -128,7 +128,7 @@ function App() {
                         fontSize: "20px",
                     }}
                 >
-                    Admission System
+                    UniAdmit
                 </h1>
 
                 <div style={{ display: "flex", alignItems: "center" }}>
